@@ -2,11 +2,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import Admin from "../models/Admin.js";
+import Product from "../models/products.js";
 
 // import Admin from "../models/Admin.js";
 // import Admins from "../models/Admin.js";
 
-dotenv.config();
+// dotenv.config();
 // import Models from "../models/index.js";
 export const register = async (req, res, next) => {
   //res.status(201).json(req.body);
@@ -19,12 +20,13 @@ export const register = async (req, res, next) => {
       fname: req.body.fname,
       lname: req.body.lname,
       email: req.body.email,
-      address_id: req.body.address_id,
       password: await bcrypt.hash(req.body.password, salt),
+      address_id: req.body.address_id,
     };
-    console.log("req", req.body);
-    const created_Admin = await Admin.create(usr);
-    res.status(201).json(created_Admin);
+    console.log("req", usr);
+
+    const created_admin = await Admin.create(usr);
+    res.status(201).json(created_admin);
   } catch (error) {
     next(error);
   }
@@ -56,6 +58,16 @@ export const Login = async (req, res, next) => {
 export const getAllAdmins = async (req, res, next) => {
   console.log("response", res);
   res.send("resss");
+};
+export const createProduct = async (req, res) => {
+  try {
+    await Product.create(req.body);
+    res.json({
+      message: "Product Created",
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const getSingleAdmin = async () => {};

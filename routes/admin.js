@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import {
+  createProduct,
   getAllAdmins,
   Login,
   register,
@@ -19,9 +20,10 @@ dotenv.config();
 const router = express.Router();
 router.get("/users", userAuth, getAllAdmins);
 
-router.post("/register", multer().any(), register);
+router.post("/register", register);
 
 router.post("/login", Login);
+router.post("/test", createProduct);
 
 router.get(
   "/me",

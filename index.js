@@ -1,19 +1,33 @@
-import express from "express";
-import userRoutes from "./routes/admin.js";
-import testRoutes from "./routes/test.js";
-const app = express();
-app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: false }));
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to our Land Managments system." });
-});
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+// Import express
 
-app.use("/", userRoutes);
-app.use("/", testRoutes);
+import express from "express";
+
+// Import cors
+
+import cors from "cors";
+
+// Import connection
+import db from "./config/database.js";
+
+// Import router
+
+import Router from "./routes/admin.js";
+
+// Init express
+
+const app = express();
+// use express json
+app.use(express.json());
+// use cors
+app.use(cors());
+// Testing database connection
+try {
+  await db.authenticate();
+  console.log("Connection has been established successfully.");
+} catch (error) {
+  console.error("Unable to connect to the database:", error);
+}
+// use router
+app.use(Router);
+// listen on port
+app.listen(5000, () => console.log("Server running at http://localhost:5000"));
