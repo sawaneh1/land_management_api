@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "sulayMarym=1",
-    "database": "land_management_db",
+    "database": "landManagementSystem_second",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

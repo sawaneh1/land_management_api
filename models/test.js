@@ -38,14 +38,11 @@ import { Sequelize } from "sequelize";
 const { DataTypes } = Sequelize;
 
 // Define schema
-const User = db.define("User", {
+const Test = db.define("Test", {
   // Define attributes
-  first_name: DataTypes.STRING,
-  last_name: DataTypes.STRING,
-  email: DataTypes.STRING,
-  password: DataTypes.STRING,
-  userType: DataTypes.STRING,
+  test_name: DataTypes.STRING,
+  tester_name: DataTypes.STRING,
 });
 
 // Export model Product
-export default User;
+export default Test;

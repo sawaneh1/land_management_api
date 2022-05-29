@@ -1,18 +1,25 @@
 import express from "express";
-import Models from "./../models/user.js";
+// import Models from "./../models/user.js";
+// import Model
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { getAllUsers, Login, register } from "../controllers/UserController.js";
+import {
+  getAllAdmins,
+  Login,
+  register,
+} from "../controllers/UserController.js";
 import userAuth from "../middleware/Auth/user.js";
-const User = Models.User;
+// const User = Models.User;
+import Admin from "../models/Admin.js";
+import multer from "multer";
 dotenv.config();
 
 /* GET users listing. */
 const router = express.Router();
-router.get("/users", userAuth, getAllUsers);
+router.get("/users", userAuth, getAllAdmins);
 
-router.post("/register", register);
+router.post("/register", multer().any(), register);
 
 router.post("/login", Login);
 
@@ -29,14 +36,14 @@ router.get(
     }
   },
   async (req, res, next) => {
-    let user = await User.findOne({
-      where: { id: req.user.id },
+    let admin = await Admin.findOne({
+      where: { id: req.admin.id },
       attributes: { exclude: ["password"] },
     });
-    if (user === null) {
-      res.status(404).json({ msg: "User not found" });
+    if (admin === null) {
+      res.status(404).json({ msg: "admin not found" });
     }
-    res.status(200).json(user);
+    res.status(200).json(admin);
   }
 );
 
